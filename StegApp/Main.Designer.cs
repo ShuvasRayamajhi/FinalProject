@@ -33,6 +33,12 @@
             this.btnEncode = new MetroFramework.Controls.MetroTile();
             this.btnSave = new MetroFramework.Controls.MetroTile();
             this.btnDecode = new MetroFramework.Controls.MetroTile();
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.message = new MetroFramework.Controls.MetroLabel();
+            this.togEncrypt = new MetroFramework.Controls.MetroToggle();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +57,7 @@
             this.btnOpen.Size = new System.Drawing.Size(75, 38);
             this.btnOpen.TabIndex = 1;
             this.btnOpen.Text = "Open File";
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // btnEncode
             // 
@@ -67,6 +74,7 @@
             this.btnSave.Size = new System.Drawing.Size(75, 38);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDecode
             // 
@@ -76,20 +84,81 @@
             this.btnDecode.TabIndex = 3;
             this.btnDecode.Text = "Decode";
             // 
+            // txtMessage
+            // 
+            this.txtMessage.Location = new System.Drawing.Point(23, 340);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(352, 96);
+            this.txtMessage.TabIndex = 5;
+            // 
+            // message
+            // 
+            this.message.AutoSize = true;
+            this.message.Location = new System.Drawing.Point(23, 321);
+            this.message.Name = "message";
+            this.message.Size = new System.Drawing.Size(63, 19);
+            this.message.TabIndex = 6;
+            this.message.Text = "Message:";
+            // 
+            // togEncrypt
+            // 
+            this.togEncrypt.AutoSize = true;
+            this.togEncrypt.Location = new System.Drawing.Point(23, 495);
+            this.togEncrypt.Name = "togEncrypt";
+            this.togEncrypt.Size = new System.Drawing.Size(80, 17);
+            this.togEncrypt.TabIndex = 7;
+            this.togEncrypt.Text = "Off";
+            this.togEncrypt.UseVisualStyleBackColor = true;
+            this.togEncrypt.CheckedChanged += new System.EventHandler(this.togEncrypt_CheckedChanged);
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(133, 495);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(137, 20);
+            this.txtPassword.TabIndex = 8;
+            // 
+            // metroLabel1
+            // 
+            this.metroLabel1.AutoSize = true;
+            this.metroLabel1.Location = new System.Drawing.Point(133, 473);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(66, 19);
+            this.metroLabel1.TabIndex = 9;
+            this.metroLabel1.Text = "Password:";
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(23, 470);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(74, 19);
+            this.metroLabel2.TabIndex = 10;
+            this.metroLabel2.Text = "Encryption:";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(493, 589);
+            this.ClientSize = new System.Drawing.Size(493, 576);
+            this.Controls.Add(this.metroLabel2);
+            this.Controls.Add(this.metroLabel1);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.togEncrypt);
+            this.Controls.Add(this.message);
+            this.Controls.Add(this.txtMessage);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDecode);
             this.Controls.Add(this.btnEncode);
             this.Controls.Add(this.btnOpen);
             this.Controls.Add(this.picBox);
             this.Name = "Main";
-            this.Text = "Form1";
+            this.Text = "StegTool";
+            this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -100,6 +169,12 @@
         private MetroFramework.Controls.MetroTile btnEncode;
         private MetroFramework.Controls.MetroTile btnSave;
         private MetroFramework.Controls.MetroTile btnDecode;
+        private System.Windows.Forms.TextBox txtMessage;
+        private MetroFramework.Controls.MetroLabel message;
+        private MetroFramework.Controls.MetroToggle togEncrypt;
+        private System.Windows.Forms.TextBox txtPassword;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private MetroFramework.Controls.MetroLabel metroLabel2;
     }
 }
 
