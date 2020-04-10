@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Data.SQLite;
 
@@ -59,6 +55,11 @@ namespace StegApp
             }
 
         }
+        internal void createDatabase()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool VerifyUser(string username, string password)
         {
             auth = new Database();
@@ -103,6 +104,7 @@ namespace StegApp
 
         public void CreateAccount(string username, string password)
         {
+            auth.CreateDatabase();
             auth = new Database();//call database
             auth.GetConnection();
             try

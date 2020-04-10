@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StegApp
@@ -35,13 +28,13 @@ namespace StegApp
             {
                 if (txtPassword.Text == txtConfirm.Text)
                 {
-                    String password = txtPassword.Text;
-                    String username = txtUsername.Text;
+                    string password = txtPassword.Text;
+                    string username = txtUsername.Text;
                     auth = new Database();
                     auth.CreateDatabase();
                     auth.GetConnection();
 
-                    Boolean exist = auth.VerifyUser(username, password);  //does the account exist already, check!
+                    bool exist = auth.VerifyUser(username, password);  //does the account exist already, call function from database class
 
                     if (exist == true)
                     {

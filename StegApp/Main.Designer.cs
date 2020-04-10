@@ -44,9 +44,11 @@
             // 
             // picBox
             // 
+            this.picBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBox.Location = new System.Drawing.Point(23, 63);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(447, 255);
+            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.picBox.TabIndex = 0;
             this.picBox.TabStop = false;
             // 
@@ -66,6 +68,7 @@
             this.btnEncode.Size = new System.Drawing.Size(75, 38);
             this.btnEncode.TabIndex = 2;
             this.btnEncode.Text = "Encode";
+            this.btnEncode.Click += new System.EventHandler(this.btnEncode_Click);
             // 
             // btnSave
             // 
@@ -116,7 +119,8 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(133, 495);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(137, 20);
+            this.txtPassword.PasswordChar = '*';
+            this.txtPassword.Size = new System.Drawing.Size(153, 20);
             this.txtPassword.TabIndex = 8;
             // 
             // metroLabel1

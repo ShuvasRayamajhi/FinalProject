@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace StegApp
 {
@@ -15,9 +9,17 @@ namespace StegApp
         Database auth;
         public Login()
         {
+            Thread t = new Thread(new ThreadStart(StartForm));
+            t.Start();
+            Thread.Sleep(500);
             InitializeComponent();
+            t.Abort();
         }
 
+        public void StartForm()
+        {
+            Application.Run(new Splash());
+        }
         private void Login_Load(object sender, EventArgs e)
         {
             this.Activate();
