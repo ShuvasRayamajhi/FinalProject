@@ -12,7 +12,7 @@ namespace StegApp
 {
     public partial class Register : MetroFramework.Forms.MetroForm
     {
-        Database db;
+        Database auth;
         public Register()
         {
             InitializeComponent();
@@ -37,11 +37,11 @@ namespace StegApp
                 {
                     String password = txtPassword.Text;
                     String username = txtUsername.Text;
-                    db = new Database();
-                    db.CreateDatabase();
-                    db.GetConnection();
+                    auth = new Database();
+                    auth.CreateDatabase();
+                    auth.GetConnection();
 
-                    Boolean exist = db.VerifyUser(username, password);  //does the account exist already, check!
+                    Boolean exist = auth.VerifyUser(username, password);  //does the account exist already, check!
 
                     if (exist == true)
                     {
@@ -50,7 +50,7 @@ namespace StegApp
 
                     else if (exist == false)
                     {
-                        
+                        auth.CreateAccount(username, password);
                         MessageBox.Show("User created", "Sucess!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
                     }

@@ -65,14 +65,12 @@ namespace StegApp
             auth.CreateDatabase();
             auth.GetConnection();
             bool exist = true;
-
             try
             {
                 using (SQLiteConnection con = new SQLiteConnection(auth.ConnectionString))
                 {
                     con.Open();
                     SQLiteCommand cmd = new SQLiteCommand();
-
                     int cnt = 0;
                     string query = @"SELECT * FROM users WHERE Username='" + username + "'";
                     cmd.CommandText = query;
@@ -101,6 +99,35 @@ namespace StegApp
                 Console.WriteLine("check account error");
             }
             return exist;
+        }
+
+        public void CreateAccount(string username, string password)
+        {
+            auth = new Database();
+            auth.GetConnection();
+            try
+            {
+                using (SQLiteConnection con = new SQLiteConnection(auth.ConnectionString))
+                {
+                    con.Open();
+                    String ePassword;
+                    ePassword = password;
+                    SQLiteCommand cmd = new SQLiteCommand();
+                    string query = @"INSERT INTO users(Username, Password) VALUES (@username, @password)";
+                    Console.WriteLine(ePassword);
+                    cmd.CommandText = query;
+                    cmd.Connection = con;
+                    cmd.Parameters.Add(new SQLiteParameter("@username", username));
+                    cmd.Parameters.Add(new SQLiteParameter("@password", ePassword));
+                    cmd.ExecuteNonQuery();
+                    Console.WriteLine("New user added.");
+                }
+
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("insert data error");
+            }
         }
 
     }
