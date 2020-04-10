@@ -21,5 +21,23 @@ namespace StegApp
         {
             this.Activate();
         }
+        private void btnLogIn_MouseEnter(object sender, EventArgs e)
+        {
+            btnLogin.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnLogIn_MouseLeave(object sender, EventArgs e)
+        {
+            btnLogin.Style = MetroFramework.MetroColorStyle.Default;
+        }
+        private void btnRegister_MouseEnter(object sender, EventArgs e)
+        {
+            btnRegister.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnRegister_MouseLeave(object sender, EventArgs e)
+        {
+            btnRegister.Style = MetroFramework.MetroColorStyle.Default;
+        }
     }
 }
