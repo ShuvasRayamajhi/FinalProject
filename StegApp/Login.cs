@@ -12,6 +12,7 @@ namespace StegApp
 {
     public partial class Login : MetroFramework.Forms.MetroForm
     {
+        Database auth;
         public Login()
         {
             InitializeComponent();
@@ -38,6 +39,42 @@ namespace StegApp
         private void btnRegister_MouseLeave(object sender, EventArgs e)
         {
             btnRegister.Style = MetroFramework.MetroColorStyle.Default;
+        }
+
+        private void btnRegister_Click(object sender, EventArgs e)
+        {
+            Register reg = new Register();
+            reg.ShowDialog();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+             if (txtUsername.Text != string.Empty
+                && txtPassword.Text != string.Empty)
+            {
+                string password = txtPassword.Text;
+                string username = txtUsername.Text;
+                auth = new Database();
+                auth.CreateDatabase();
+                auth.GetConnection();
+
+                bool success = auth.LogIn(username, password);
+
+                if (success == true)
+                {
+                    this.Hide();
+                    Main mainForm = new Main();
+                    mainForm.ShowDialog();
+                }
+                else if (success == false)
+                {
+                    MessageBox.Show("Incorrect username or password.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Filed/s Empty!", "Warning");
+            }
         }
     }
 }

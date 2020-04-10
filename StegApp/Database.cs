@@ -103,14 +103,14 @@ namespace StegApp
 
         public void CreateAccount(string username, string password)
         {
-            auth = new Database();
+            auth = new Database();//call database
             auth.GetConnection();
             try
             {
                 using (SQLiteConnection con = new SQLiteConnection(auth.ConnectionString))
                 {
                     con.Open();
-                    String ePassword;
+                    string ePassword;
                     ePassword = PasswordEncrypt.Encryption(password);
                     SQLiteCommand cmd = new SQLiteCommand();
                     string query = @"INSERT INTO users(Username, Password) VALUES (@username, @password)";
@@ -128,6 +128,47 @@ namespace StegApp
             {
                 Console.WriteLine("insert data error");
             }
+        }
+
+        public bool LogIn(string username, string password)
+        {
+            auth = new Database();
+            auth.GetConnection();
+            bool login = false; //check if account logs in
+            try
+            {
+                using (SQLiteConnection con = new SQLiteConnection(auth.ConnectionString))
+                {
+                    con.Open();
+                    string ePassword = PasswordEncrypt.Encryption(password); //encrypt password
+                    SQLiteCommand cmd = new SQLiteCommand();
+                    string query = @"SELECT * FROM users WHERE Username='" + username + "' and Password='" + ePassword + "'";
+                    int count = 0;
+                    cmd.CommandText = query;
+                    cmd.Connection = con;
+                    SQLiteDataReader read = cmd.ExecuteReader();
+                    while (read.Read())
+                    {
+                        count++;
+                    }
+                    if (count == 1)
+                    {
+                        login = true;
+                        Console.WriteLine("Log in sucessful.");
+                    }
+                    else
+                    {
+                        login = false;
+                        Console.WriteLine("Log in failed.");
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString() + "check account error");
+            }
+            return login;
         }
 
     }
