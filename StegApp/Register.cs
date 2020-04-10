@@ -10,16 +10,7 @@ namespace StegApp
         {
             InitializeComponent();
         }
-        private void btnRegister_MouseEnter(object sender, EventArgs e)
-        {
-            btnRegister.Style = MetroFramework.MetroColorStyle.Green;
-        }
-
-        private void btnRegister_MouseLeave(object sender, EventArgs e)
-        {
-            btnRegister.Style = MetroFramework.MetroColorStyle.Default;
-        }
-
+     
         private void btnRegister_Click(object sender, EventArgs e)
         {
             if (txtUsername.Text != string.Empty

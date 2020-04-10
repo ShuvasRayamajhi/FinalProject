@@ -75,35 +75,6 @@ namespace StegApp
             btnEncode.Style = MetroFramework.MetroColorStyle.Default;
         }
 
-        private void btnOpen_MouseEnter(object sender, EventArgs e)
-        {
-            btnOpen.Style = MetroFramework.MetroColorStyle.Green;
-        }
-
-        private void btnOpen_MouseLeave(object sender, EventArgs e)
-        {
-            btnOpen.Style = MetroFramework.MetroColorStyle.Default;
-        }
-
-        private void btnDecode_MouseEnter_1(object sender, EventArgs e)
-        {
-            btnDecode.Style = MetroFramework.MetroColorStyle.Green;
-        }
-
-        private void btnDecode_MouseLeave_1(object sender, EventArgs e)
-        {
-            btnDecode.Style = MetroFramework.MetroColorStyle.Default;
-        }
-        private void btnSave_MouseEnter(object sender, EventArgs e)
-        {
-            btnSave.Style = MetroFramework.MetroColorStyle.Green;
-        }
-
-        private void btnSave_MouseLeave(object sender, EventArgs e)
-        {
-            btnSave.Style = MetroFramework.MetroColorStyle.Default;
-        }
-
         private void btnEncode_Click(object sender, EventArgs e)//encode message into image
         {
             bitmp = (Bitmap)picBox.Image;

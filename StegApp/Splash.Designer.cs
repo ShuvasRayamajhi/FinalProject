@@ -35,7 +35,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(23, 189);
+            this.progressBar.Location = new System.Drawing.Point(23, 232);
             this.progressBar.MarqueeAnimationSpeed = 20;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(295, 23);
@@ -45,9 +45,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::StegApp.Properties.Resources.backblur;
-            this.pictureBox1.Location = new System.Drawing.Point(23, 76);
+            this.pictureBox1.Location = new System.Drawing.Point(23, 63);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(295, 103);
+            this.pictureBox1.Size = new System.Drawing.Size(295, 163);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
@@ -56,7 +56,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 235);
+            this.ClientSize = new System.Drawing.Size(341, 278);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.progressBar);
             this.Name = "Splash";
