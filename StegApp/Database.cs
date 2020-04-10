@@ -111,7 +111,7 @@ namespace StegApp
                 {
                     con.Open();
                     String ePassword;
-                    ePassword = password;
+                    ePassword = PasswordEncrypt.Encryption(password);
                     SQLiteCommand cmd = new SQLiteCommand();
                     string query = @"INSERT INTO users(Username, Password) VALUES (@username, @password)";
                     Console.WriteLine(ePassword);
