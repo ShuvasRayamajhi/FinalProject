@@ -14,19 +14,19 @@ namespace StegApp
         string connection;
 
         Database auth; //initialise database 
-        public void getConnection()
+        public void GetConnection()
         {
             connection = @"Data Source=Database.db; Version=3";
             ConnectionString = connection;
         }
-        public void createDatabase()
+        public void CreateDatabase()
         {
             if (!File.Exists("Database.db")) //if database file doesn't exist already
             {
                 try
                 {
                     File.Create("Database.db"); //create database file
-                    createTable();
+                    CreateTable();
                 }
                 catch (Exception ex)
                 {
@@ -35,14 +35,14 @@ namespace StegApp
             }
             else
             {
-                createTable();
+                CreateTable();
             }
         }
-        private void createTable() //creating a table
+        private void CreateTable() //creating a table
         {
             try
             {
-                getConnection();
+                GetConnection();
                 using (SQLiteConnection con = new SQLiteConnection(ConnectionString))
                 {
                     con.Open();
@@ -58,6 +58,49 @@ namespace StegApp
                 Console.WriteLine(ex.Message);
             }
 
+        }
+        public bool VerifyUser(string username, string password)
+        {
+            auth = new Database();
+            auth.CreateDatabase();
+            auth.GetConnection();
+            bool exist = true;
+
+            try
+            {
+                using (SQLiteConnection con = new SQLiteConnection(auth.ConnectionString))
+                {
+                    con.Open();
+                    SQLiteCommand cmd = new SQLiteCommand();
+
+                    int cnt = 0;
+                    string query = @"SELECT * FROM users WHERE Username='" + username + "'";
+                    cmd.CommandText = query;
+                    cmd.Connection = con;
+
+                    SQLiteDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        cnt++;
+                    }
+                    if (cnt == 1)
+                    {
+                        exist = true;
+                        Console.WriteLine("existing user");
+                    }
+                    else if (cnt == 0)
+                    {
+                        exist = false;
+                        Console.WriteLine("new user");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message, "Error");
+                Console.WriteLine("check account error");
+            }
+            return exist;
         }
 
     }
