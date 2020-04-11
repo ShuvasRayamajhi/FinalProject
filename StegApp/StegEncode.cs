@@ -45,21 +45,21 @@ namespace StegApp
                             case 0:
                                 {
                                     if (add == false) //when zeroes have stopped adding, we start the hiding of the text 
-                                        Blue = Blue + value % 2; //  add 2 percent of character to Blue bits
-                                    value = value / 2; //divided by value by 2
+                                        Blue = Blue + value % 2; //  add remainder of character value to Blue bits
+                                    value = value / 2; //divided  value by 2
                                 }
                                 break;
                             case 1:
                                 {
                                     if (add == false)
-                                        Green += value % 2; // add 2 percent of characterto Green pixels
+                                        Green += value % 2; //add remainder of character value to Green pixels
                                     value /= 2; //divide character value by 2, 
                                 }
                                 break;
                             case 2:
                                 {
                                     if (add == false)
-                                        Red += value % 2;  // add 2 percent of character to Green pixels
+                                        Red += value % 2;  // add remainder of character value to Green pixels
                                     value /= 2; //divide character value by 2, 
 
                                     image.SetPixel(width, height, Color.FromArgb(Blue, Green, Red)); // Save R G B values in pixels at height and width position.
@@ -73,7 +73,7 @@ namespace StegApp
                     }
                 }
             }
-            return image;
+            return image; //return the encoded image
         }
 
         private static void removeLSB(Bitmap image, out int Blue, out int Green, out int Red, int height, int width)

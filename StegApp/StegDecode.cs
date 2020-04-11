@@ -9,8 +9,19 @@ namespace StegApp
 {
     class StegDecode
     {
+        private static int Reverse(int pix) //takes pixel value and reverses it 
+        {
+            int a = 0;
+            for (int height = 0; height < 8; height++)
+            {
+                if ((pix & (1 << height)) != 0)
+                    a |= 1 << (7 - height);
+            }
+            return a;
+        }
         public static string StegDecoding(Bitmap bitmp)
         {
+
             string decodedText = ""; //stores the decoded teg that will be returned
             int colour = 0; //index of colour unit from image
             int value = 0; //store the intger, converted from character to hide
@@ -51,6 +62,7 @@ namespace StegApp
                         {
                             try
                             {
+                                value = Reverse(value); //need to reverse the value because the process takes place on the right
                                 if (value == 0) //if the value is 0 then it indicates it is the end because of we added 8 zeroes
                                     return decodedText; //return decoded text
                                 char character = (char)value; //convert character value to character
