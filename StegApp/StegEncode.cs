@@ -12,7 +12,7 @@ namespace StegApp
         public static Bitmap Encoding(string text, Bitmap image)
         {
             bool add = false; //boolean variable to decide whether to hide or add, false = hide, true = fill with zeroes 
-            int height, width;
+            int height, width; //store height width of image
             getImageData(out long pixel, out int zero, out _, out _, out _, out int character, out int value, out _); //call method
 
             for (height = 0; height < image.Height; height++) //go through the height of the bmp.
