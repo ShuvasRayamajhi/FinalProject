@@ -90,8 +90,10 @@ namespace StegApp
                     MessageBox.Show("No Text Entered!", "Warning");
                 if (txtPassword.Text.Length < 1)
                     MessageBox.Show("No Password Entered!", "Warning");
-
-                //encryption
+                else
+                {
+                    encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
+                }//encryption
             }
             if (bitmp != null)
             {
@@ -133,8 +135,17 @@ namespace StegApp
                 string decodeText = StegDecode.StegDecoding(bitmp); //steganography
 
                 if (togEncrypt.Checked)
-                {
-                   //encryption
+                { 
+                    try
+                    {
+                        decodeText = Cryptography.Decryption(decodeText, txtPassword.Text); //decryption
+                    }
+                    catch
+                    {
+                        MessageBox.Show("No or wrong password!", "Error");
+                    }
+                
+        
                 }
                 if (decodeText == " ")
                 {
