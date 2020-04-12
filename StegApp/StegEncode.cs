@@ -27,8 +27,8 @@ namespace StegApp
                             if (add == true && zero == 8)  // process finished when 8 zeroes have been added. Using 8 zeroes to indicate that end of the text is reached so we can decode. 
                             {
                                 pixel = (pixel - 1) % 3;
-                                if (pixel < 2) // RGB values changed to 0 are not applied to the bmp object, and when finished, the changed pixel values are applied
-                                    image.SetPixel(width, height, Color.FromArgb(Blue, Green, Red)); //apply adding zero to the image
+                                if (pixel < 2) 
+                                    image.SetPixel(width, height, Color.FromArgb(Blue, Green, Red)); //apply to the last pixel required in the image  
                                 return image; //return the encoded image
                             }
 
@@ -36,6 +36,7 @@ namespace StegApp
                                 add = true; //keep adding zeroes until it reaches the text length
 
                             else //if there is still text to hide, bring one more character to hide.
+                                //Console.WriteLine("before: " + value);
                                 value = text[character++]; //convert the current character to an integer, iterate to the next character in the text and repeat adding process
                         }
 
@@ -46,27 +47,27 @@ namespace StegApp
                                 {
                                     if (add == false) //when zeroes have stopped adding, we start the hiding of the text 
                                         Blue = Blue + value % 2; //  add remainder of character value to Blue bits
-                                    value = value / 2; //divided  value by 2
+                                        value = value / 2; //divided  value by 2 and set that to the new value
                                 }
                                 break;
                             case 1:
                                 {
                                     if (add == false)
                                         Green += value % 2; //add remainder of character value to Green pixels
-                                    value /= 2; //divide character value by 2, 
+                                        value /= 2; //divide character value by 2, 
                                 }
                                 break;
                             case 2:
                                 {
                                     if (add == false)
                                         Red += value % 2;  // add remainder of character value to Green pixels
-                                    value /= 2; //divide character value by 2, 
+                                        value /= 2; //divide character value by 2, 
 
-                                    image.SetPixel(width, height, Color.FromArgb(Blue, Green, Red)); // Save R G B values in pixels at height and width position.
+                                        image.SetPixel(width, height, Color.FromArgb(Blue, Green, Red)); // apply to image the changes
                                 }
                                 break;
                         }
-
+                        Console.WriteLine("Character Value: " + value.ToString());
                         pixel++;
                         if (add == true)
                             zero++; //loop until amount of zeroes added is 8

@@ -86,6 +86,7 @@
             this.btnDecode.Size = new System.Drawing.Size(75, 38);
             this.btnDecode.TabIndex = 3;
             this.btnDecode.Text = "Decode";
+            this.btnDecode.Click += new System.EventHandler(this.btnDecode_Click);
             // 
             // txtMessage
             // 

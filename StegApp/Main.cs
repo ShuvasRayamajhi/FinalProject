@@ -90,16 +90,18 @@ namespace StegApp
                     MessageBox.Show("No Text Entered!", "Warning");
                 if (txtPassword.Text.Length < 1)
                     MessageBox.Show("No Password Entered!", "Warning");
+
+                //encryption
             }
             if (bitmp != null)
             {
-                bitmp = StegEncode.Encoding(encodeText, bitmp); //steganography
+                bitmp = StegEncode.Encoding(encodeText, bitmp); //call steganography function
                 MessageBox.Show("Success!", "Done");
 
-                SaveFileDialog saveFile = new SaveFileDialog();
+                SaveFileDialog saveFile = new SaveFileDialog(); //save image
                 saveFile.Filter = "Png Image|*.png|Bitmap Image|*.bmp";
 
-                if (saveFile.ShowDialog() == DialogResult.OK)
+                if (saveFile.ShowDialog() == DialogResult.OK) 
                 {
                     switch (saveFile.FilterIndex)
                     {
@@ -116,6 +118,30 @@ namespace StegApp
                     }
                 }
 
+            }
+            else
+            {
+                MessageBox.Show("No Image Selected!", "Warning");
+            }
+        }
+
+        private void btnDecode_Click(object sender, EventArgs e)
+        {
+            bitmp = (Bitmap)picBox.Image;
+            if (bitmp != null)
+            {
+                string decodeText = StegDecode.StegDecoding(bitmp); //steganography
+
+                if (togEncrypt.Checked)
+                {
+                   //encryption
+                }
+                if (decodeText == " ")
+                {
+                    MessageBox.Show("Non-stego image selected!", "Error");
+                }
+
+                txtMessage.Text = decodeText;
             }
             else
             {

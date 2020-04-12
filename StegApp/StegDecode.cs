@@ -63,7 +63,7 @@ namespace StegApp
                             try
                             {
                                 value = Reverse(value); //need to reverse the value because the process takes place on the right
-                                if (value == 0) //if the value is 0 then it indicates it is the end because of we added 8 zeroes
+                                if (value == 0) //if the value is 0 then it indicates it is the end because we added zeroes
                                     return decodedText; //return decoded text
                                 char character = (char)value; //convert character value to character
                                 decodedText += character.ToString(); //coventry characters back to string
