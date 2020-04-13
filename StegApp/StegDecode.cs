@@ -12,7 +12,7 @@ namespace StegApp
         private static int Reverse(int pix) //takes pixel value and reverses it 
         {
             int a = 0;
-            for (int height = 0; height < 8; height++)
+            for (int height = 0; height < 8; height++) //reverse value
             {
                 if ((pix & (1 << height)) != 0)
                     a |= 1 << (7 - height);
@@ -56,9 +56,9 @@ namespace StegApp
                         {
                             Console.WriteLine("Failed at decoding."); 
                         }
-                        colour++; //keep going until colour unit gets to 8
+                        colour++; //keep going until colour unit gets to 8.
                        
-                        if (colour % 8 == 0) // check that 8 bits have been added. Then add the current character in the loop to the output text
+                        if (colour % 8 == 0) // check for consecutive 8 bits, then we know the encoded data is all read.
                         {
                             try
                             {

@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cryptography.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -143,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <None Include="Resources\upload-16.png" />
+    <None Include="Resources\upload %281%29.png" />
     <None Include="Resources\backblur.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

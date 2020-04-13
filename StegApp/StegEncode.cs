@@ -13,13 +13,13 @@ namespace StegApp
         {
             bool add = false; //boolean variable to decide whether to hide or add, false = hide, true = fill with zeroes 
             int height, width; //store height width of image
-            getImageData(out long pixel, out int zero, out _, out _, out _, out int character, out int value, out _); //call method
+            GetImageData(out long pixel, out int zero, out _, out _, out _, out int character, out int value, out _); //call method
 
             for (height = 0; height < image.Height; height++) //go through the height of the bmp.
             {
                 for (width = 0; width < image.Width; width++) //go through the width of the bmp.
                 {
-                    removeLSB(image, out int Blue, out int Green, out int Red, height, width); //remove the least significant bit from each pixel
+                    RemoveLSB(image, out int Blue, out int Green, out int Red, height, width); //remove the least significant bit from each pixel
                     for (int pix = 0; pix < 3; pix++) //go through each pixel for RGB and turn their value to 0
                     {
                         if (pixel % 8 == 0) //each pixel has three values; red, green, and blue. Each RGB is 8bit so we can add 8 zeroes in each RGB value
@@ -43,6 +43,7 @@ namespace StegApp
                         //hide 8 bits of each character consecutively into the RGB (eg. R1 to R3) the number is the pixels. Do this for all bits of characters until text is finished. 
                         switch (pixel % 3) //each pixel contains three values (red, green, blue), these are 8bit values. 
                         {
+
                             case 0:
                                 {
                                     if (add == false) //when zeroes have stopped adding, we start the hiding of the text 
@@ -62,12 +63,11 @@ namespace StegApp
                                     if (add == false)
                                         Red += value % 2;  // add remainder of character value to Green pixels
                                         value /= 2; //divide character value by 2, 
-
                                         image.SetPixel(width, height, Color.FromArgb(Blue, Green, Red)); // apply to image the changes
                                 }
                                 break;
                         }
-                        Console.WriteLine("Character Value: " + value.ToString());
+                       // Console.WriteLine("Character Value: " + value.ToString());
                         pixel++;
                         if (add == true)
                             zero++; //loop until amount of zeroes added is 8
@@ -77,7 +77,7 @@ namespace StegApp
             return image; //return the encoded image
         }
 
-        private static void removeLSB(Bitmap image, out int Blue, out int Green, out int Red, int height, int width)
+        private static void RemoveLSB(Bitmap image, out int Blue, out int Green, out int Red, int height, int width)
         {
             Color pixel = image.GetPixel(width, height); //stores the current pixel in the processing
             Red = pixel.R - pixel.R % 2; //remove the red LSB; 2% of red pixels
@@ -85,7 +85,7 @@ namespace StegApp
             Blue = pixel.B - pixel.B % 2; // remove blue LSB
         }
 
-        private static void getImageData(out long pixel, out int zero, out int Red, out int Green, out int Blue, out int character, out int value, out int pix)
+        private static void GetImageData(out long pixel, out int zero, out int Red, out int Green, out int Blue, out int character, out int value, out int pix)
         {
             pixel = 0; //store the integer index of the pixel 
             zero = 0; //store amount of  zeroes that have been added

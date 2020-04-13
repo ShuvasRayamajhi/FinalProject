@@ -19,14 +19,14 @@ namespace StegApp
             InitializeComponent();
         }
 
-        private void btnOpen_Click(object sender, EventArgs e) //load an image to be encoded
+        private void btnOpen_Click(object sender, EventArgs e) 
         {
-            OpenFileDialog open_dialog = new OpenFileDialog();
-            open_dialog.Filter = "Image Files (*.jpeg; *.png; *.bmp)|*.jpg; *.png; *.bmp";
+            OpenFileDialog open_dialog = new OpenFileDialog(); //get image
+            open_dialog.Filter = "Image Files (*.jpeg; *.png; *.bmp)|*.jpg; *.png; *.bmp"; //the accepted file types
 
             if (open_dialog.ShowDialog() == DialogResult.OK)
             {
-                picBox.Image = Image.FromFile(open_dialog.FileName);
+                picBox.Image = Image.FromFile(open_dialog.FileName); //display the image on the picture box
             }
         }
 
@@ -75,21 +75,19 @@ namespace StegApp
             btnEncode.Style = MetroFramework.MetroColorStyle.Default;
         }
 
-        private void btnEncode_Click(object sender, EventArgs e)//encode message into image
+        private void btnEncode_Click(object sender, EventArgs e)//when the encode button is clicked
         {
-            bitmp = (Bitmap)picBox.Image;
+            bitmp = (Bitmap)picBox.Image; //assign a variable to the image
 
-            string encodeText = txtMessage.Text;
+            string encodeText = txtMessage.Text; //assign variable to the input message
 
             if (encodeText == null)
-                MessageBox.Show("No Text Entered!", "Warning");
+                MessageBox.Show("No text entered!", "Warning"); //empty check for the text message
 
-            if (togEncrypt.Checked)
+            if (togEncrypt.Checked) //check the toggle switch
             {
-                if (txtMessage.Text.Length < 1)
-                    MessageBox.Show("No Text Entered!", "Warning");
-                if (txtPassword.Text.Length < 1)
-                    MessageBox.Show("No Password Entered!", "Warning");
+                if (txtPassword.Text.Length < 5) //check that password is at least of length 5
+                    MessageBox.Show("Password too short!", "Warning");
                 else
                 {
                     encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
@@ -109,12 +107,12 @@ namespace StegApp
                     {
                         case 0:
                             {
-                                bitmp.Save(saveFile.FileName, ImageFormat.Png);
+                                bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
                             }
                             break;
                         case 1:
                             {
-                                bitmp.Save(saveFile.FileName, ImageFormat.Bmp);
+                                bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
                             }
                             break;
                     }
@@ -134,6 +132,10 @@ namespace StegApp
             {
                 string decodeText = StegDecode.StegDecoding(bitmp); //steganography
 
+                if (togEncrypt.Checked != false)
+                {
+                    MessageBox.Show("Turn on encryption!", "Error");
+                }
                 if (togEncrypt.Checked)
                 { 
                     try
@@ -158,6 +160,16 @@ namespace StegApp
             {
                 MessageBox.Show("No Image Selected!", "Warning");
             }
+        }
+
+        private void btnOpen_MouseEnter(object sender, EventArgs e)
+        {
+            btnOpen.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnOpen_MouseLeave(object sender, EventArgs e)
+        {
+            btnOpen.Style = MetroFramework.MetroColorStyle.Default;
         }
     }
 }
