@@ -25,9 +25,7 @@ namespace StegApp
             open_dialog.Filter = "Image Files (*.jpeg; *.png; *.bmp)|*.jpg; *.png; *.bmp"; //the accepted file types
 
             if (open_dialog.ShowDialog() == DialogResult.OK)
-            {
                 picBox.Image = Image.FromFile(open_dialog.FileName); //display the image on the picture box
-            }
         }
 
         private void btnSave_Click(object sender, EventArgs e) //save image
@@ -37,19 +35,11 @@ namespace StegApp
 
             if (saveFile.ShowDialog() == DialogResult.OK)
             {
-                switch (saveFile.FilterIndex)
-                {
-                    case 0:
-                        {
-                            bitmp.Save(saveFile.FileName, ImageFormat.Png);
-                        }
-                        break;
-                    case 1:
-                        {
-                            bitmp.Save(saveFile.FileName, ImageFormat.Bmp);
-                        }
-                        break;
-                }
+                if (saveFile.FilterIndex == 0)
+                    bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
+
+                else if (saveFile.FilterIndex == 1)
+                    bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
             }
         }
 
@@ -87,11 +77,10 @@ namespace StegApp
             if (togEncrypt.Checked) //check the toggle switch
             {
                 if (txtPassword.Text.Length < 5) //check that password is at least of length 5
-                    MessageBox.Show("Password too short!", "Warning");
-                else
-                {
+                    MessageBox.Show("Password has to be 5 characters!", "Warning");
+                
+                else if (txtPassword.Text.Length >= 5)
                     encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
-                }//encryption
             }
             if (bitmp != null)
             {
@@ -103,19 +92,12 @@ namespace StegApp
 
                 if (saveFile.ShowDialog() == DialogResult.OK) 
                 {
-                    switch (saveFile.FilterIndex)
-                    {
-                        case 0:
-                            {
-                                bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
-                            }
-                            break;
-                        case 1:
-                            {
-                                bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
-                            }
-                            break;
-                    }
+                    if (saveFile.FilterIndex == 0)
+                        bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
+
+                   
+                    else if (saveFile.FilterIndex == 1)
+                        bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
                 }
 
             }
@@ -132,34 +114,35 @@ namespace StegApp
             {
                 string decodeText = StegDecode.StegDecoding(bitmp); //steganography
 
-                if (togEncrypt.Checked != false)
-                {
-                    MessageBox.Show("Turn on encryption!", "Error");
-                }
                 if (togEncrypt.Checked)
-                { 
-                    try
+                {
+                    if (txtPassword.TextLength < 5)
+                    {
+                        MessageBox.Show("Password has to be at least 5 characters!", "Error");
+                    }
+                    else if (txtPassword == null)
+                    {
+                        MessageBox.Show("No password entered!", "Error");
+                    }
+
+                    else
                     {
                         decodeText = Cryptography.Decryption(decodeText, txtPassword.Text); //decryption
                     }
-                    catch
-                    {
-                        MessageBox.Show("No or wrong password!", "Error");
-                    }
+                }
                 
-        
-                }
-                if (decodeText == " ")
+                else
                 {
-                    MessageBox.Show("Non-stego image selected!", "Error");
+                    MessageBox.Show("Turn on encryption!", "Error");
                 }
+
+                if (decodeText == " ")
+                    MessageBox.Show("Non-stego image selected!", "Error");
 
                 txtMessage.Text = decodeText;
             }
             else
-            {
                 MessageBox.Show("No Image Selected!", "Warning");
-            }
         }
 
         private void btnOpen_MouseEnter(object sender, EventArgs e)

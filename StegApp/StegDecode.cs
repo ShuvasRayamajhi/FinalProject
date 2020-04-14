@@ -39,22 +39,22 @@ namespace StegApp
                     {
                         try
                         {
-                            switch (colour % 3)
+                            if (colour % 3 == 0)
                             {
-                                case 0:
-                                    value = value * 2 + pixel.R % 2; //get the result of pixel element Red % 2, then add a bit to right of current character value
-                                    break;
-                                case 1:
-                                    value = value * 2 + pixel.G % 2; //adding one bit to right of the current character (value * 2)
-                                    break;
-                                case 2:
-                                    value = value * 2 + pixel.B % 2; //the added bit which is "0" is then replaced with lowest significant bit(where the hidden data is) from each pixel just by adding; whilst encoding we subtracted. 
-                                    break;
+                                value = value * 2 + pixel.R % 2; //get the result of pixel element Red % 2, then add a bit to right of current character value
+                            }
+                            else if (colour % 3 == 1)
+                            {
+                                value = value * 2 + pixel.G % 2; //adding one bit to right of the current character (value * 2)
+                            }
+                            else if (colour % 3 == 2)
+                            {
+                                value = value * 2 + pixel.B % 2; //whilst decoding we add and multiply, whilst encoding we divided and decode; same process reversed. 
                             }
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            Console.WriteLine("Failed at decoding."); 
+                            Console.WriteLine(ex); 
                         }
                         colour++; //keep going until colour unit gets to 8.
                        
@@ -68,9 +68,9 @@ namespace StegApp
                                 char character = (char)value; //convert character value to character
                                 decodedText += character.ToString(); //coventry characters back to string
                             }
-                            catch
+                            catch (Exception ex)
                             {
-                                Console.WriteLine("Failed to return or convert text to string");
+                                Console.WriteLine(ex);
                             }
                         }
                     }
