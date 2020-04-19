@@ -21,7 +21,6 @@ namespace StegApp
         }
         public static string StegDecoding(Bitmap bitmp)
         {
-
             string decodedText = ""; //stores the decoded teg that will be returned
             int colour = 0; //index of colour unit from image
             int value = 0; //store the intger, converted from character to hide
@@ -39,8 +38,9 @@ namespace StegApp
                     {
                         try
                         {
-                            if (colour % 3 == 0)
+                            if (colour % 3 == 0) //divide by 3 and use the remainder, can be either 0, 1 or 2
                             {
+                                Console.WriteLine("decode value " + value);
                                 value = value * 2 + pixel.R % 2; //get the result of pixel element Red % 2, then add a bit to right of current character value
                             }
                             else if (colour % 3 == 1)
@@ -50,6 +50,7 @@ namespace StegApp
                             else if (colour % 3 == 2)
                             {
                                 value = value * 2 + pixel.B % 2; //whilst decoding we add and multiply, whilst encoding we divided and decode; same process reversed. 
+                                Console.WriteLine("decode value " + value);
                             }
                         }
                         catch (Exception ex)

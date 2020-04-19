@@ -37,14 +37,14 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.btnOpen = new MetroFramework.Controls.MetroTile();
-            this.picBox = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.picBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
+            this.btnOpen = new MetroFramework.Controls.MetroTile();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -57,7 +57,10 @@
             this.btnEncode.Size = new System.Drawing.Size(75, 40);
             this.btnEncode.TabIndex = 2;
             this.btnEncode.Text = "Encode";
+            this.btnEncode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnEncode.Click += new System.EventHandler(this.btnEncode_Click);
+            this.btnEncode.MouseEnter += new System.EventHandler(this.btnEncode_MouseEnter_1);
+            this.btnEncode.MouseLeave += new System.EventHandler(this.btnEncode_MouseLeave_1);
             // 
             // btnSave
             // 
@@ -66,7 +69,10 @@
             this.btnSave.Size = new System.Drawing.Size(75, 40);
             this.btnSave.TabIndex = 4;
             this.btnSave.Text = "Save";
+            this.btnSave.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.MouseEnter += new System.EventHandler(this.btnSave_MouseEnter);
+            this.btnSave.MouseLeave += new System.EventHandler(this.btnSave_MouseLeave);
             // 
             // btnDecode
             // 
@@ -75,13 +81,17 @@
             this.btnDecode.Size = new System.Drawing.Size(75, 40);
             this.btnDecode.TabIndex = 3;
             this.btnDecode.Text = "Decode";
+            this.btnDecode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.btnDecode.Click += new System.EventHandler(this.btnDecode_Click);
+            this.btnDecode.MouseEnter += new System.EventHandler(this.btnDecode_MouseEnter);
+            this.btnDecode.MouseLeave += new System.EventHandler(this.btnDecode_MouseLeave);
             // 
             // txtMessage
             // 
             this.txtMessage.Location = new System.Drawing.Point(6, 38);
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
+            this.txtMessage.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtMessage.Size = new System.Drawing.Size(316, 98);
             this.txtMessage.TabIndex = 5;
             // 
@@ -110,6 +120,7 @@
             this.txtPassword.Location = new System.Drawing.Point(118, 58);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
+            this.txtPassword.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtPassword.Size = new System.Drawing.Size(153, 20);
             this.txtPassword.TabIndex = 8;
             // 
@@ -131,31 +142,6 @@
             this.metroLabel2.TabIndex = 10;
             this.metroLabel2.Text = "Encryption:";
             // 
-            // btnOpen
-            // 
-            this.btnOpen.Location = new System.Drawing.Point(20, 21);
-            this.btnOpen.Name = "btnOpen";
-            this.btnOpen.Size = new System.Drawing.Size(75, 40);
-            this.btnOpen.TabIndex = 1;
-            this.btnOpen.Text = "Open File";
-            this.btnOpen.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnOpen.TileImage = global::StegApp.Properties.Resources.upload_16;
-            this.btnOpen.TileImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnOpen.UseTileImage = true;
-            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
-            this.btnOpen.MouseEnter += new System.EventHandler(this.btnOpen_MouseEnter);
-            this.btnOpen.MouseLeave += new System.EventHandler(this.btnOpen_MouseLeave);
-            // 
-            // picBox
-            // 
-            this.picBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picBox.Location = new System.Drawing.Point(6, 15);
-            this.picBox.Name = "picBox";
-            this.picBox.Size = new System.Drawing.Size(457, 251);
-            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picBox.TabIndex = 0;
-            this.picBox.TabStop = false;
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.picBox);
@@ -166,6 +152,16 @@
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Step 1: Select Picture";
+            // 
+            // picBox
+            // 
+            this.picBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.picBox.Location = new System.Drawing.Point(6, 15);
+            this.picBox.Name = "picBox";
+            this.picBox.Size = new System.Drawing.Size(457, 251);
+            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picBox.TabIndex = 0;
+            this.picBox.TabStop = false;
             // 
             // groupBox2
             // 
@@ -207,6 +203,20 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Controls";
             // 
+            // btnOpen
+            // 
+            this.btnOpen.Location = new System.Drawing.Point(20, 21);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(75, 40);
+            this.btnOpen.TabIndex = 1;
+            this.btnOpen.Text = "Open ";
+            this.btnOpen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.btnOpen.TileImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnOpen.UseTileImage = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            this.btnOpen.MouseEnter += new System.EventHandler(this.btnOpen_MouseEnter);
+            this.btnOpen.MouseLeave += new System.EventHandler(this.btnOpen_MouseLeave);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -217,10 +227,10 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Main";
-            this.Text = "StegTool";
+            this.Text = "STool";
             this.Load += new System.EventHandler(this.Main_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);

@@ -10,7 +10,6 @@ namespace StegApp
     class Cryptography
     {
         private static byte[] _salt = Encoding.ASCII.GetBytes("fdsklk23rjfe9arejk23rnboamep");
-
         public static string Encryption(string inputTxt, string password)
         {
             string outputTxt = ""; //output encrypted string

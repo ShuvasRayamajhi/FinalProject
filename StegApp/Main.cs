@@ -99,7 +99,6 @@ namespace StegApp
                     else if (saveFile.FilterIndex == 1)
                         bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
                 }
-
             }
             else
             {
@@ -110,10 +109,10 @@ namespace StegApp
         private void btnDecode_Click(object sender, EventArgs e)
         {
             bitmp = (Bitmap)picBox.Image;
-            if (bitmp != null)
+            if (bitmp != null )
             {
                 string decodeText = StegDecode.StegDecoding(bitmp); //steganography
-
+                
                 if (togEncrypt.Checked)
                 {
                     if (txtPassword.TextLength < 5)
@@ -125,21 +124,22 @@ namespace StegApp
                         MessageBox.Show("No password entered!", "Error");
                     }
 
+                    else if (togEncrypt.Checked == false)
+                    {
+                        MessageBox.Show("Turn on encryption!", "Error");
+                    }
                     else
                     {
                         decodeText = Cryptography.Decryption(decodeText, txtPassword.Text); //decryption
                     }
                 }
-                
+
+                if (decodeText != " ")
+                    txtMessage.Text = decodeText;
+
                 else
-                {
-                    MessageBox.Show("Turn on encryption!", "Error");
-                }
-
-                if (decodeText == " ")
-                    MessageBox.Show("Non-stego image selected!", "Error");
-
-                txtMessage.Text = decodeText;
+                    MessageBox.Show("Non text to decode!", "Error");
+                
             }
             else
                 MessageBox.Show("No Image Selected!", "Warning");
@@ -153,6 +153,36 @@ namespace StegApp
         private void btnOpen_MouseLeave(object sender, EventArgs e)
         {
             btnOpen.Style = MetroFramework.MetroColorStyle.Default;
+        }
+
+        private void btnEncode_MouseEnter_1(object sender, EventArgs e)
+        {
+            btnEncode.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnEncode_MouseLeave_1(object sender, EventArgs e)
+        {
+            btnEncode.Style = MetroFramework.MetroColorStyle.Default;
+        }
+
+        private void btnDecode_MouseEnter(object sender, EventArgs e)
+        {
+            btnDecode.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnDecode_MouseLeave(object sender, EventArgs e)
+        {
+            btnDecode.Style = MetroFramework.MetroColorStyle.Default;
+        }
+
+        private void btnSave_MouseEnter(object sender, EventArgs e)
+        {
+            btnSave.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnSave_MouseLeave(object sender, EventArgs e)
+        {
+            btnSave.Style = MetroFramework.MetroColorStyle.Default;
         }
     }
 }

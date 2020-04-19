@@ -144,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <None Include="Resources\lock-4-16.png" />
+    <None Include="Resources\upload-161.png" />
+    <None Include="Resources\lock-5-16.png" />
     <None Include="Resources\upload-16.png" />
     <None Include="Resources\upload %281%29.png" />
     <None Include="Resources\backblur.jpg" />

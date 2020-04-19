@@ -73,6 +73,26 @@ namespace StegApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lock_4_16 {
+            get {
+                object obj = ResourceManager.GetObject("lock-4-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lock_5_16 {
+            get {
+                object obj = ResourceManager.GetObject("lock-5-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap upload__1_ {
             get {
                 object obj = ResourceManager.GetObject("upload (1)", resourceCulture);
@@ -86,6 +106,16 @@ namespace StegApp.Properties {
         internal static System.Drawing.Bitmap upload_16 {
             get {
                 object obj = ResourceManager.GetObject("upload-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap upload_161 {
+            get {
+                object obj = ResourceManager.GetObject("upload-161", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

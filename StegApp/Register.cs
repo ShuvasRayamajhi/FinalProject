@@ -50,5 +50,15 @@ namespace StegApp
                 MessageBox.Show("Empty Field/s!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnRegister_MouseEnter(object sender, EventArgs e)
+        {
+            btnRegister.Style = MetroFramework.MetroColorStyle.Green;
+        }
+
+        private void btnRegister_MouseLeave(object sender, EventArgs e)
+        {
+            btnRegister.Style = MetroFramework.MetroColorStyle.Default;
+        }
     }
 }
