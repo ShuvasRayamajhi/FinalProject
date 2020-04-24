@@ -30,7 +30,7 @@ namespace StegApp
                         using (CryptoStream EncryptCs = new CryptoStream(memStream, encrypt, CryptoStreamMode.Write))
                         using (StreamWriter EncryptSw = new StreamWriter(EncryptCs))
                             EncryptSw.Write(inputTxt); //write the plain text to the stream
-                        outputTxt = Convert.ToBase64String(memStream.ToArray());
+                        outputTxt = Convert.ToBase64String(memStream.ToArray()); //generate cypher text and return
                     }
                 }
                 catch (Exception ex)
@@ -50,26 +50,26 @@ namespace StegApp
 
             return outputTxt; //return the encrypted text
         }
-        public static string Decryption(string encryptedText, string password) //encrypted encryptedText
+        public static string Decryption(string encryptedText, string password) //encrypted text, password
         {
             string decryptedText = "";
-            RijndaelManaged algorithmAES = null;
+            RijndaelManaged algorithmAES = null; //to decrypt, initialise the rijndaelmanged object
 
-            if (password != "" || encryptedText != "")
+            if (password != "" || encryptedText != "") //if both inputs are not empty
             {
                 try
                 {
-                    Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, _salt);
-                    byte[] bytes = Convert.FromBase64String(encryptedText);
+                    Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, _salt); //generate key 
+                    byte[] bytes = Convert.FromBase64String(encryptedText); //create the stream to decrypt string
                     using (MemoryStream decryptMS = new MemoryStream(bytes))
                     {
-                        algorithmAES = new RijndaelManaged();
-                        algorithmAES.Key = key.GetBytes(algorithmAES.KeySize / 8);
-                        algorithmAES.IV = ReadByteArray(decryptMS);
-                        ICryptoTransform decrypt = algorithmAES.CreateDecryptor(algorithmAES.Key, algorithmAES.IV);
+                        algorithmAES = new RijndaelManaged(); //create rijandaelmanged object
+                        algorithmAES.Key = key.GetBytes(algorithmAES.KeySize / 8); //specify key
+                        algorithmAES.IV = ReadByteArray(decryptMS); //specify iv
+                        ICryptoTransform decrypt = algorithmAES.CreateDecryptor(algorithmAES.Key, algorithmAES.IV); //create decryptor
                         using (CryptoStream decryptCs = new CryptoStream(decryptMS, decrypt, CryptoStreamMode.Read))
                         using (StreamReader srDecrypt = new StreamReader(decryptCs))
-                            decryptedText = srDecrypt.ReadToEnd();
+                            decryptedText = srDecrypt.ReadToEnd(); //read the decrypted btyes and assign them to a variable
                     }
                 }
                 catch (Exception ex)
@@ -80,10 +80,10 @@ namespace StegApp
             else
             {
                 if (encryptedText == "")
-                    Console.WriteLine("Empty input text.");
+                    Console.WriteLine("Empty input text."); //error message
                 if (password == "")
                     Console.WriteLine("Empty password.");
-                if (algorithmAES != null)
+                if (algorithmAES != null) //clear object
                     algorithmAES.Clear();
             }
             return decryptedText;
@@ -101,6 +101,6 @@ namespace StegApp
     }
 
 }
-//References "CryptoStream Class" Microsoft (n.d.) https://docs.microsoft.com/
+
 
 

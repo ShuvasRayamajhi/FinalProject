@@ -13,32 +13,38 @@ namespace StegApp
      
         private void btnRegister_Click(object sender, EventArgs e)
         {
-            if (txtUsername.Text != string.Empty
+            if (txtUsername.Text != string.Empty //check empty input
                 && txtPassword.Text != string.Empty
                 && txtConfirm.Text != string.Empty)
             {
                 if (txtPassword.Text == txtConfirm.Text)
                 {
-                    string password = txtPassword.Text;
-                    string username = txtUsername.Text;
-                    auth = new Database();
-                    auth.CreateDatabase();
-                    auth.GetConnection();
-
-                    bool exist = auth.VerifyUser(username, password);  //does the account exist already, call function from database class
-
-                    if (exist == true)
+                    if (txtPassword.TextLength >= 5)
                     {
-                        MessageBox.Show("User already exists.", "Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                        string password = txtPassword.Text; //variable
+                        string username = txtUsername.Text;
+                        auth = new Database(); //new database
+                        auth.CreateDatabase(); //create database if not created already
+                        auth.GetConnection();
 
-                    else if (exist == false)
+                        bool exist = auth.VerifyUser(username);  //does the account exist already, call function from database class
+
+                        if (exist == true) //account exists
+                        {
+                            MessageBox.Show("User already exists.", "Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error); //give error message
+                        }
+
+                        else if (exist == false) //account does not exist
+                        {
+                            auth.CreateAccount(username, password); //call function to create account
+                            MessageBox.Show("User created", "Sucess!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            this.Close();
+                        }
+                    }
+                    else
                     {
-                        auth.CreateAccount(username, password);
-                        MessageBox.Show("User created", "Sucess!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
+                        MessageBox.Show("Password too short.", "Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error); //give error message
                     }
-
                 }
                 else
                 {

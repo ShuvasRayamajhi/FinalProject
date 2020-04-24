@@ -34,7 +34,7 @@ namespace StegApp
         private void btnLogin_Click(object sender, EventArgs e)
         {
             if (txtUsername.Text != string.Empty
-               && txtPassword.Text != string.Empty) //if the textboxes are not empty
+               && txtPassword.Text != string.Empty && txtPassword.Text.Length >= 5) //if the textboxes are not empty
             {
                 string password = txtPassword.Text; //store username
                 string username = txtUsername.Text; //store password
@@ -52,10 +52,10 @@ namespace StegApp
                 }
                 else if (success == false) //log in failed so give error message
                 {
-                    MessageBox.Show("Incorrect username or password.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Incorrect username or password.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error); //error message
                 }
             }
-            else if (txtPassword.Text.Length < 5)
+            else if (txtPassword.Text.Length < 5) //password is too short
             {
                 MessageBox.Show("Password is too short.", "Warning");
             }

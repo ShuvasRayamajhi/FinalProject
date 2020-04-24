@@ -30,16 +30,23 @@ namespace StegApp
 
         private void btnSave_Click(object sender, EventArgs e) //save image
         {
-            SaveFileDialog saveFile = new SaveFileDialog();
-            saveFile.Filter = "Png Image|*.png|Bitmap Image|*.bmp";
-
-            if (saveFile.ShowDialog() == DialogResult.OK)
+            if (picBox.Image != null)
             {
-                if (saveFile.FilterIndex == 0)
-                    bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
+                SaveFileDialog saveFile = new SaveFileDialog();
+                saveFile.Filter = "Png Image|*.png|Bitmap Image|*.bmp";
 
-                else if (saveFile.FilterIndex == 1)
-                    bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
+                if (saveFile.ShowDialog() == DialogResult.OK)
+                {
+                    if (saveFile.FilterIndex == 0)
+                        bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
+
+                    else if (saveFile.FilterIndex == 1)
+                        bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Image Selected!", "Warning");
             }
         }
 
@@ -82,7 +89,7 @@ namespace StegApp
                 else if (txtPassword.Text.Length >= 5)
                     encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
             }
-            if (bitmp != null)
+            if (bitmp != null || txtPassword.TextLength >= 5)
             {
                 bitmp = StegEncode.Encoding(encodeText, bitmp); //call steganography function
                 MessageBox.Show("Success!", "Done");
@@ -99,6 +106,10 @@ namespace StegApp
                     else if (saveFile.FilterIndex == 1)
                         bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
                 }
+            }
+            else if (txtPassword.TextLength < 5 )
+            {
+                MessageBox.Show("Password too short!", "Warning");
             }
             else
             {

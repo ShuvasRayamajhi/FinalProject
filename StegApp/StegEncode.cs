@@ -54,7 +54,6 @@ namespace StegApp
                             if (pixelIndex % 3 == 0) //pixel divided by 3 leaves 0 remainder
                             {
                                 if (addZero == false) //when zeroes have stopped adding, we start the hiding of the text
-                                    //Console.WriteLine("blue LSB: " + blueLSB);
                                     blueLSB += characterValue % 2; //find the rightmost bit in the character value; this will replace the LSB, 
                                     characterValue /= 2; //half the character Value
                             }
@@ -62,7 +61,6 @@ namespace StegApp
                             {
                                 if (addZero == false)
                                     greenLSB += characterValue % 2; ////find the rightmost bit in the character value; this will replace the LSB
-
                                     characterValue /= 2; //half the characterValue
                             }
                             else if (pixelIndex % 3 == 2) // leaves 2 remainder
