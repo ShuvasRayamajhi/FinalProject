@@ -10,7 +10,6 @@ namespace StegApp
         {
             InitializeComponent();
         }
-     
         private void btnRegister_Click(object sender, EventArgs e)
         {
             if (txtUsername.Text != string.Empty //check empty input

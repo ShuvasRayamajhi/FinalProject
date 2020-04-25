@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StegApp
 {
@@ -11,7 +7,7 @@ namespace StegApp
     {
         public static Bitmap Encoding(string text, Bitmap image)
         {
-            bool addZero = false; //boolean variable to decide whether to hide or add, false = hide, true = fill with zeroes 
+            bool addZero = false; //boolean variable to decide whether to hide or add, false = hide, true = fill zeroes 
             int height, width; //store height width of image
             GetImageData(out long pixelIndex, out int zero, out _, out _, out _, out int character, out int characterValue, out _); //call method
 
@@ -80,7 +76,6 @@ namespace StegApp
             greenLSB = pixelIndex.G & ~1; //get the green LSB and force it 0
             blueLSB = pixelIndex.B & ~1; // get blue LSB and force it 0
         }
-
         private static void GetImageData(out long pixelIndex, out int zero, out int redLSB, out int greenLSB, out int blueLSB, out int character, out int characterValue, out int pix)
         {
             pixelIndex = 0; //store the integer index of the pixelIndex 

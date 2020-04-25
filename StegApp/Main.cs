@@ -83,11 +83,14 @@ namespace StegApp
 
             if (togEncrypt.Checked) //check the toggle switch
             {
-                if (txtPassword.Text.Length < 5) //check that password is at least of length 5
-                    MessageBox.Show("Password has to be 5 characters!", "Warning");
+                if (txtPassword.Text == " ") //check that password is at least of length 5
+                    MessageBox.Show("Password needs to be entered!", "Warning");
                 
+                else if (txtPassword.Text.Length < 5) //check that password is at least of length 5
+                    MessageBox.Show("Password has to be 5 characters!", "Warning");
+
                 else if (txtPassword.Text.Length >= 5)
-                    encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
+                    encodeText = Cryptography.Encrypt(encodeText, txtPassword.Text); //encryption
             }
             if (bitmp != null || txtPassword.TextLength >= 5)
             {
@@ -123,25 +126,34 @@ namespace StegApp
             if (bitmp != null )
             {
                 string decodeText = StegDecode.StegDecoding(bitmp); //steganography
-                
+               
                 if (togEncrypt.Checked)
                 {
-                    if (txtPassword.TextLength < 5)
-                    {
-                        MessageBox.Show("Password has to be at least 5 characters!", "Error");
-                    }
-                    else if (txtPassword == null)
+                    if (txtPassword.Text == " ")
                     {
                         MessageBox.Show("No password entered!", "Error");
                     }
-
+                    else if (txtPassword.Text != " " && txtPassword.TextLength < 5)
+                    {
+                        MessageBox.Show("Password has to be at least 5 characters!", "Error");
+                    }
+                    
                     else if (togEncrypt.Checked == false)
                     {
                         MessageBox.Show("Turn on encryption!", "Error");
                     }
-                    else
+                    else 
                     {
-                        decodeText = Cryptography.Decryption(decodeText, txtPassword.Text); //decryption
+                        try
+                        {
+                            string password = txtPassword.Text;
+                            decodeText = Cryptography.Decrypt(decodeText, password); //decryption
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Wrong password!", "Error");
+                            Console.WriteLine(ex);
+                        }
                     }
                 }
 

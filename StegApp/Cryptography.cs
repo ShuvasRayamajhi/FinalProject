@@ -1,22 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.IO;
+using System.Linq;
+
 namespace StegApp
 {
-    class Cryptography
+    public static class Cryptography
     {
-        private static byte[] _salt = Encoding.ASCII.GetBytes("fdsklk23rjfe9arejk23rnboamep");
+        private const int keySize = 256;
+        private const int iterationOfDerivation = 1000;
 
-        public static string EncryptPassword(string password)
+        public static string Encrypt(string inputTxt, string password) //user entered text and password
+        {
+            byte[] saltStringBytes = Generate256BitsOfRandomEntropy();
+            byte [] ivStringBytes = Generate256BitsOfRandomEntropy();
+            byte[] plainBytes = Encoding.UTF8.GetBytes(inputTxt);
+            using (Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, saltStringBytes, iterationOfDerivation)) //generate the  decryption key using the inupt password
+            {
+                byte[] keyBytes = decryptKey.GetBytes(keySize / 8); //set the decryption key size
+                using (RijndaelManaged algorithmAES = new RijndaelManaged()) //create RijndaelManaged object (used to encrypt text)
+                {
+                    algorithmAES.BlockSize = 256; //set block size
+                    algorithmAES.Mode = CipherMode.CBC; //set cipher mode
+                    algorithmAES.Padding = PaddingMode.PKCS7; //set padding
+                    using (ICryptoTransform encryptor = algorithmAES.CreateEncryptor(keyBytes, ivStringBytes)) //create the encryptor for the stream
+                    using (MemoryStream memoryStream = new MemoryStream()) //create memory stream for encryption
+                    using (CryptoStream memStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        memStream.Write(plainBytes, 0, plainBytes.Length); //write
+                        memStream.FlushFinalBlock();
+                        byte[] cipherBytes = saltStringBytes;
+                        cipherBytes = cipherBytes.Concat(ivStringBytes).ToArray();
+                        cipherBytes = cipherBytes.Concat(memoryStream.ToArray()).ToArray();
+                        memoryStream.Close();
+                        memStream.Close();
+                        string encryptedText = Convert.ToBase64String(cipherBytes); //generate cypher text and return
+                        return encryptedText; //return the encrypted text
+                    }
+                }
+            }
+        }
+
+        public static string Decrypt(string encryptedText, string password) //encrypted text, password
+        {
+            byte[] cipherTextBytesWithSaltAndIv = Convert.FromBase64String(encryptedText);
+            byte[] saltStringBytes = cipherTextBytesWithSaltAndIv.Take(keySize / 8).ToArray();
+            byte[] ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(keySize / 8).Take(keySize / 8).ToArray();
+            byte[] cipherBytes = cipherTextBytesWithSaltAndIv.Skip((keySize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((keySize / 8) * 2)).ToArray();
+            
+            using (Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, saltStringBytes, iterationOfDerivation)) //generate key 
+            {
+                byte[] keyBytes = decryptKey.GetBytes(keySize / 8); //specify key
+                using (RijndaelManaged algorithmAES = new RijndaelManaged())  //create rijandaelmanged object
+                {
+                    algorithmAES.BlockSize = 256; //set block size
+                    algorithmAES.Mode = CipherMode.CBC; //set cipher mode
+                    algorithmAES.Padding = PaddingMode.PKCS7; //set padding
+                    using (ICryptoTransform decryptor = algorithmAES.CreateDecryptor(keyBytes, ivStringBytes)) //create decryptor
+                    using (MemoryStream memoryStream = new MemoryStream(cipherBytes))
+                    using (CryptoStream memStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    {
+                        byte[] plainBytes = new byte[cipherBytes.Length];
+                        int decryptedByteCount = memStream.Read(plainBytes, 0, plainBytes.Length);
+                        memoryStream.Close();
+                        memStream.Close();
+                        string decryptedText = Encoding.UTF8.GetString(plainBytes, 0, decryptedByteCount); //read the decrypted btyes and return value as string
+                        return decryptedText;
+
+                    }
+                }
+            }
+        }
+
+        private static byte[] Generate256BitsOfRandomEntropy()
+        {
+            byte[] randomBytes = new byte[32]; 
+            using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())
+            {
+                rngCsp.GetBytes(randomBytes);
+            }
+            return randomBytes;
+        }
+
+        public static string EncryptPassword(string decryptKey)
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] encrypt;
-            UTF8Encoding encode = new UTF8Encoding();//encrypt the password
-            encrypt = md5.ComputeHash(encode.GetBytes(password));
+            UTF8Encoding encode = new UTF8Encoding();//encrypt the decryptKey
+            encrypt = md5.ComputeHash(encode.GetBytes(decryptKey));
             StringBuilder encryptdata = new StringBuilder(); //Create string 
             for (int i = 0; i < encrypt.Length; i++)
             {
@@ -25,98 +97,5 @@ namespace StegApp
             return encryptdata.ToString();
         }
 
-        public static string Encryption(string inputTxt, string password)
-        {
-            string outputTxt = ""; //output encrypted string
-            RijndaelManaged algorithmAES = null; //initialise the object
-
-            if (password != "" || inputTxt != "") //check the text to encrypt and password are not empty
-            {
-                algorithmAES = new RijndaelManaged();  //create RijndaelManaged object (used to encrypt text)
-                Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, _salt); //generate the  decryption key using the inupt password
-                algorithmAES.Key = decryptKey.GetBytes(algorithmAES.KeySize / 8); //set the decryption key size
-                ICryptoTransform encrypt = algorithmAES.CreateEncryptor(algorithmAES.Key, algorithmAES.IV);//create the encryptor for the stream
-                try
-                {
-                    using (MemoryStream memStream = new MemoryStream()) //create memory stream for encryption
-                    {
-                        memStream.Write(BitConverter.GetBytes(algorithmAES.IV.Length), 0, sizeof(int)); //write
-                        memStream.Write(algorithmAES.IV, 0, algorithmAES.IV.Length);
-                        using (CryptoStream EncryptCs = new CryptoStream(memStream, encrypt, CryptoStreamMode.Write))
-                        using (StreamWriter EncryptSw = new StreamWriter(EncryptCs))
-                            EncryptSw.Write(inputTxt); //write the plain text to the stream
-                        outputTxt = Convert.ToBase64String(memStream.ToArray()); //generate cypher text and return
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
-            else
-            {
-                if (inputTxt == null)
-                    throw new ArgumentNullException("Empty input text."); //error messages
-                if (password == null)
-                    throw new ArgumentNullException("Empty password.");
-                if (algorithmAES != null)
-                    algorithmAES.Clear();
-            }
-
-            return outputTxt; //return the encrypted text
-        }
-
-        public static string Decryption(string encryptedText, string password) //encrypted text, password
-        {
-            string decryptedText = "";
-            RijndaelManaged algorithmAES = null; //to decrypt, initialise the rijndaelmanged object
-
-            if (password != "" || encryptedText != "") //if both inputs are not empty
-            {
-                try
-                {
-                    Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(password, _salt); //generate key 
-                    byte[] bytes = Convert.FromBase64String(encryptedText); //create the stream to decrypt string
-                    using (MemoryStream decryptMS = new MemoryStream(bytes))
-                    {
-                        algorithmAES = new RijndaelManaged(); //create rijandaelmanged object
-                        algorithmAES.Key = key.GetBytes(algorithmAES.KeySize / 8); //specify key
-                        algorithmAES.IV = ReadByteArray(decryptMS); //specify iv
-                        ICryptoTransform decrypt = algorithmAES.CreateDecryptor(algorithmAES.Key, algorithmAES.IV); //create decryptor
-                        using (CryptoStream decryptCs = new CryptoStream(decryptMS, decrypt, CryptoStreamMode.Read))
-                        using (StreamReader srDecrypt = new StreamReader(decryptCs))
-                            decryptedText = srDecrypt.ReadToEnd(); //read the decrypted btyes and assign them to a variable
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
-            }
-            else
-            {
-                if (encryptedText == "")
-                    Console.WriteLine("Empty input text."); //error message
-                if (password == "")
-                    Console.WriteLine("Empty password.");
-                if (algorithmAES != null) //clear object
-                    algorithmAES.Clear();
-            }
-            return decryptedText;
-        }
-        private static byte[] ReadByteArray(Stream stream) //reading bytes for decryption
-        {
-            byte[] lengthRaw = new byte[sizeof(int)];
-            if (stream.Read(lengthRaw, 0, lengthRaw.Length) != lengthRaw.Length)
-                Console.WriteLine("Contains bad array.");
-            byte[] buffer = new byte[BitConverter.ToInt32(lengthRaw, 0)];
-            if (stream.Read(buffer, 0, buffer.Length) != buffer.Length)
-                Console.WriteLine("Cannot read.");
-            return buffer;
-        }
     }
-
 }
-
-
-
