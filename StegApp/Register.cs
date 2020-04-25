@@ -59,7 +59,7 @@ namespace StegApp
 
         private void btnRegister_MouseEnter(object sender, EventArgs e)
         {
-            btnRegister.Style = MetroFramework.MetroColorStyle.Green;
+            btnRegister.Style = MetroFramework.MetroColorStyle.Green; //ui design
         }
 
         private void btnRegister_MouseLeave(object sender, EventArgs e)
