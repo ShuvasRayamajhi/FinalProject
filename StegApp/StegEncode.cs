@@ -29,7 +29,7 @@ namespace StegApp
                                 Console.WriteLine(blueLSB + redLSB + greenLSB + " 1. lsb before");
                                 Console.WriteLine("pixelIndex" + pixelIndex);
                                 pixelIndex = (pixelIndex - 1) % 3; //remainder of pixelIndex - 1 divided by 3
-                                if (pixelIndex <= 1) //this is only activated for the last pixelIndex at the end
+                                if (pixelIndex <= 1 && zero == 8) //this is only activated for the last pixel at the end
                                     image.SetPixel(width, height, Color.FromArgb(blueLSB, greenLSB, redLSB)); //apply to the last pixel Index if required in the image  
                                 return image; //return the encoded image
                             }
@@ -38,20 +38,21 @@ namespace StegApp
 
                             else if (pixelIndex % 8 == 0) //if there is still text to hide, bring one more character to hide.
                                 characterValue = text[character++]; //convert the current character to an integer, iterate to the next character in the text and repeat adding process
-                     
-                            if (pixelIndex % 3 == 0) //pixel divided by 3 leaves 0 remainder
+
+                            long remainder = pixelIndex % 3;
+                            if (remainder == 0) //pixel divided by 3 leaves 0 remainder/ differentiate rgb
                             {
                                 if (addZero == false) //when zeroes have stopped adding, we start the hiding of the text
                                     blueLSB += characterValue % 2; //find the rightmost bit in the character value; this will replace the LSB of blue pixel element, 
                                     characterValue /= 2; //half the character value
                             }
-                            else if (pixelIndex % 3 == 1) //pixel divided by 3 leaves 1 remainder
+                            else if (remainder == 1) //pixel divided by 3 leaves 1 remainder
                             {
                                 if (addZero == false)
                                     greenLSB += characterValue % 2; ////find the rightmost bit in the character value; this will replace the LSB of green pixel element
                                     characterValue /= 2; //half the characterValue
                             }
-                            else if (pixelIndex % 3 == 2) // leaves 2 as remainder
+                            else if (remainder == 2) // leaves 2 as remainder
                             {
                                 if (addZero == false)
                                     redLSB += characterValue % 2;  // //find the rightmost bit in the character value; this will replace the LSB
