@@ -41,27 +41,21 @@ namespace StegApp
                             if (colour % 3 == 0) //divide by 3 and use the remainder, can be either 0, 1 or 2
                             {
                                 Console.WriteLine("decode value " + value);
-                                value = value * 2 + pixel.R % 2; //get the result of pixel element Red % 2, then add a bit to right of current character value
+                                value = value * 2 + pixel.R % 2; //get the remainder of pixel element Red % 2, then add a bit to right of current character value
                             }
-                            else if (colour % 3 == 1)
+                            else if (colour % 3 == 1) //remainder 1
                             {
-                                value = value * 2 + pixel.G % 2; //adding one bit to right of the current character (value * 2)
+                                value = value * 2 + pixel.G % 2; //add to value the lsb
                             }
-                            else if (colour % 3 == 2)
+                            else if (colour % 3 == 2) //remainder 2
                             {
                                 value = value * 2 + pixel.B % 2; //whilst decoding we add and multiply, whilst encoding we divided and decode; same process reversed. 
                                 Console.WriteLine("decode value " + value);
                             }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex); 
-                        }
-                        colour++; //keep going until colour unit gets to 8.
-                       
-                        if (colour % 8 == 0) // check for consecutive 8 bits, then we know the encoded data is all read.
-                        {
-                            try
+
+                            colour++; //keep going until colour unit gets to 8.
+                            
+                            if (colour % 8 == 0) // check for consecutive 8 bits, then we know the encoded data is all read.
                             {
                                 value = Reverse(value); //need to reverse the value because the process takes place on the right
                                 if (value == 0) //if the value is 0 then it indicates it is the end because we added zeroes
@@ -69,10 +63,11 @@ namespace StegApp
                                 char character = (char)value; //convert character value to character
                                 decodedText += character.ToString(); //coventry characters back to string
                             }
-                            catch (Exception ex)
-                            {
-                                Console.WriteLine(ex);
-                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
                         }
                     }
                 }

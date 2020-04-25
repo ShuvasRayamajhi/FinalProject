@@ -113,7 +113,7 @@ namespace StegApp
                 {
                     con.Open();
                     string ePassword;
-                    ePassword = PasswordEncrypt.Encryption(password);
+                    ePassword = Cryptography.EncryptPassword(password);
                     SQLiteCommand cmd = new SQLiteCommand();
                     string query = @"INSERT INTO users(Username, Password) VALUES (@username, @password)";
                     Console.WriteLine(ePassword);
@@ -142,7 +142,7 @@ namespace StegApp
                 using (SQLiteConnection con = new SQLiteConnection(auth.ConnectionString))
                 {
                     con.Open();
-                    string ePassword = PasswordEncrypt.Encryption(password); //encrypt password
+                    string ePassword = Cryptography.EncryptPassword(password); //encrypt password
                     SQLiteCommand cmd = new SQLiteCommand();
                     string query = @"SELECT * FROM users WHERE Username='" + username + "' and Password='" + ePassword + "'"; //check the input username and password match the database
                     int count = 0;

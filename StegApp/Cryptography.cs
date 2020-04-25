@@ -10,6 +10,21 @@ namespace StegApp
     class Cryptography
     {
         private static byte[] _salt = Encoding.ASCII.GetBytes("fdsklk23rjfe9arejk23rnboamep");
+
+        public static string EncryptPassword(string password)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] encrypt;
+            UTF8Encoding encode = new UTF8Encoding();//encrypt the password
+            encrypt = md5.ComputeHash(encode.GetBytes(password));
+            StringBuilder encryptdata = new StringBuilder(); //Create string 
+            for (int i = 0; i < encrypt.Length; i++)
+            {
+                encryptdata.Append(encrypt[i].ToString());
+            }
+            return encryptdata.ToString();
+        }
+
         public static string Encryption(string inputTxt, string password)
         {
             string outputTxt = ""; //output encrypted string
@@ -50,6 +65,7 @@ namespace StegApp
 
             return outputTxt; //return the encrypted text
         }
+
         public static string Decryption(string encryptedText, string password) //encrypted text, password
         {
             string decryptedText = "";
