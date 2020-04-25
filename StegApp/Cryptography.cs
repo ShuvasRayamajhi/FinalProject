@@ -41,7 +41,7 @@ namespace StegApp
             else
             {
                 if (inputTxt == null)
-                    throw new ArgumentNullException("Empty input text.");
+                    throw new ArgumentNullException("Empty input text."); //error messages
                 if (password == null)
                     throw new ArgumentNullException("Empty password.");
                 if (algorithmAES != null)
@@ -88,7 +88,7 @@ namespace StegApp
             }
             return decryptedText;
         }
-        private static byte[] ReadByteArray(Stream stream)
+        private static byte[] ReadByteArray(Stream stream) //reading bytes for decryption
         {
             byte[] lengthRaw = new byte[sizeof(int)];
             if (stream.Read(lengthRaw, 0, lengthRaw.Length) != lengthRaw.Length)
