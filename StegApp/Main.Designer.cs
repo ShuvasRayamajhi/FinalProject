@@ -42,8 +42,8 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.btnOpen = new MetroFramework.Controls.MetroTile();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnOpen = new MetroFramework.Controls.MetroTile();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -93,6 +93,7 @@
             this.txtMessage.Multiline = true;
             this.txtMessage.Name = "txtMessage";
             this.txtMessage.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtMessage.Size = new System.Drawing.Size(316, 98);
             this.txtMessage.TabIndex = 5;
             // 
@@ -205,6 +206,16 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Controls";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(64, 228);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(31, 20);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // btnOpen
             // 
             this.btnOpen.Location = new System.Drawing.Point(20, 21);
@@ -218,16 +229,6 @@
             this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             this.btnOpen.MouseEnter += new System.EventHandler(this.btnOpen_MouseEnter);
             this.btnOpen.MouseLeave += new System.EventHandler(this.btnOpen_MouseLeave);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(64, 228);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(31, 20);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "?";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Main
             // 

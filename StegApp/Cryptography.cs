@@ -10,7 +10,16 @@ namespace StegApp
     {
         private const int iterationOfDerivation = 1000; //used for the password generation function
         private const int keySize = 256; //variable that decides the encryption key size
-        
+
+        private static byte[] Generate256BitsOfRandomEntropy() //generate random bytes for encryption 
+        {
+            byte[] randomBytes = new byte[32];
+            using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())
+                rngCsp.GetBytes(randomBytes);
+          
+            return randomBytes;
+        }
+
         public static string Encryption(string inputTxt, string password) //user entered text and password
         {
             byte[] ivBytes = Generate256BitsOfRandomEntropy(); //declare iv bytes variable
@@ -72,17 +81,8 @@ namespace StegApp
             }
         }
 
-        private static byte[] Generate256BitsOfRandomEntropy() //generate random bytes
-        {
-            byte[] randomBytes = new byte[32]; 
-            using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())
-            {
-                rngCsp.GetBytes(randomBytes);
-            }
-            return randomBytes;
-        }
-
-        public static string EncryptPassword(string decryptKey)
+      
+        public static string EncryptPassword(string decryptKey) //encrypt password for login register
         {
             MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
             byte[] encrypt;

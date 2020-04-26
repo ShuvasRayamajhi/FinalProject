@@ -86,10 +86,10 @@ namespace StegApp
                 if (txtPassword.Text == " ") //check that password is at least of length 5
                     MessageBox.Show("Password needs to be entered!", "Warning");
                 
-                else if (txtPassword.Text.Length >= 5)
+                else 
                     encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
             }
-            if (bitmp != null && txtPassword.Text.Length >= 5)
+            if (bitmp != null )
             {
                 bitmp = StegEncode.Encoding(encodeText, bitmp); //call steganography function
                 MessageBox.Show("Success!", "Done");
@@ -106,10 +106,6 @@ namespace StegApp
                     else if (saveFile.FilterIndex == 1)
                         bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
                 }
-            }
-            else if (txtPassword.Text.Length < 5 )
-            {
-                MessageBox.Show("Password too short!", "Warning");
             }
             else
             {
@@ -130,11 +126,6 @@ namespace StegApp
                     {
                         MessageBox.Show("No password entered!", "Error");
                     }
-                    else if (txtPassword.Text != " " && txtPassword.TextLength < 5)
-                    {
-                        MessageBox.Show("Password has to be at least 5 characters!", "Error");
-                    }
-                    
                     else if (togEncrypt.Checked == false)
                     {
                         MessageBox.Show("Turn on encryption!", "Error");

@@ -35,19 +35,11 @@ namespace StegApp
                         try
                         {
                             if (colour % 3 == 0) //divide by 3 and use the remainder, can be either 0, 1 or 2
-                            {
-                                Console.WriteLine("decode value " + value);
                                 value = value * 2 + pixel.R % 2; //read from the pixel element then add a bit to right of current character value
-                            }
                             else if (colour % 3 == 1) //remainder 1
-                            {
                                 value = value * 2 + pixel.G % 2; //read from the pixel element and add to value 
-                            }
                             else if (colour % 3 == 2) //remainder 2
-                            {
                                 value = value * 2 + pixel.B % 2; //whilst decoding we add and multiply, whilst encoding we divided and decode; same process reversed. 
-                                Console.WriteLine("decode value " + value);
-                            }
 
                             colour++; //keep going until colour unit gets to 8.
                             

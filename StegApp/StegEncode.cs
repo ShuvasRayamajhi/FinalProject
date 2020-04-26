@@ -20,47 +20,42 @@ namespace StegApp
                     {
                         try
                         {
-                            if (addZero == true) //if zeroes are still required to be added
-                            { 
-                                if (pixelIndex % 8 == 0) // process finished when 8 zeroes have been added. Using 8 zeroes to indicate that end of the text is reached so we can decode. 
-                                {
-                                    pixelIndex = (pixelIndex - 1) % 3; //remainder of pixelIndex - 1 divided by 3
-                                    if (pixelIndex <= 1 && zero == 8) //this is only activated for the last pixel at the end
-                                        image.SetPixel(width, height, Color.FromArgb(blueLSB, greenLSB, redLSB)); //apply to the last pixel Index if required in the image  
-                                    return image; //return the encoded image
-                                }
+                            if (addZero == true && pixelIndex % 8 == 0)  // process finished when 8 zeroes have been added. Using 8 zeroes to indicate that end of the text is reached so we can decode. 
+                            {
+                                pixelIndex = (pixelIndex - 1) % 3; //remainder of pixelIndex - 1 divided by 3
+                                if (pixelIndex <= 1 && zero == 8) //this is only activated for the last pixel at the end
+                                    image.SetPixel(width, height, Color.FromArgb(blueLSB, greenLSB, redLSB)); //apply to the last pixel Index if required in the image  
+                                return image; //return the encoded image
                             }
                             if (text.Length <= character && pixelIndex % 8 == 0) //ensures that the every character from the text is hidden
                                 addZero = true; //keep adding zeroes until it reaches the text length
 
                             else if (pixelIndex % 8 == 0) //if there is still text to hide, bring one more character to hide.
                                 characterValue = text[character++]; //convert the current character to an integer, iterate to the next character in the text and repeat adding process
-                           
-                            if (addZero == false) //if adding zeroes is done
+
+                            long remainder = pixelIndex % 3;
+                            if (remainder == 0) //pixel divided by 3 leaves 0 remainder/ differentiate rgb
                             {
-                                long remainder = pixelIndex % 3;
-                                if (remainder == 0) //pixel divided by 3 leaves 0 remainder/ differentiate rgb
-                                {
+                                if (addZero == false) //when zeroes have stopped adding, we start the hiding of the text
                                     blueLSB += characterValue % 2; //find the rightmost bit in the character value; this will replace the LSB of blue pixel element, 
                                     characterValue /= 2; //half the character value
-                                }
-                                else if (remainder == 1) //pixel divided by 3 leaves 1 remainder
-                                {
-                                    
+                            }
+                            else if (remainder == 1) //pixel divided by 3 leaves 1 remainder
+                            {
+                                if (addZero == false)
                                     greenLSB += characterValue % 2; ////find the rightmost bit in the character value; this will replace the LSB of green pixel element
                                     characterValue /= 2; //half the characterValue
-                                }
-                                else if (remainder == 2) // leaves 2 as remainder
-                                {
+                            }
+                            else if (remainder == 2) // leaves 2 as remainder
+                            {
+                                if (addZero == false)
                                     redLSB += characterValue % 2;  // //find the rightmost bit in the character value; this will replace the LSB
                                     characterValue /= 2; //half the characterValue 
                                     image.SetPixel(width, height, Color.FromArgb(blueLSB, greenLSB, redLSB)); // apply to image the changes
-                                }
                             }
                             pixelIndex++;
                             if (addZero == true)
                                 zero++; //loop until amount of zeroes added is 8
-
                         }
                         catch (Exception ex)
                         {
