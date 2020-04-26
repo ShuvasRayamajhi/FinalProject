@@ -22,3 +22,4 @@ C:\Users\shuva\StegApp\StegApp\obj\Debug\StegApp.Splash.resources
 C:\Users\shuva\StegApp\StegApp\obj\Debug\StegApp.csproj.CopyComplete
 C:\Users\shuva\StegApp\StegApp\obj\Debug\StegApp.exe
 C:\Users\shuva\StegApp\StegApp\obj\Debug\StegApp.pdb
+C:\Users\shuva\StegApp\StegApp\obj\Debug\StegApp.Help.resources

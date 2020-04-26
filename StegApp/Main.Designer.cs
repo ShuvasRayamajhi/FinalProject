@@ -43,6 +43,7 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.btnOpen = new MetroFramework.Controls.MetroTile();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -64,7 +65,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(20, 190);
+            this.btnSave.Location = new System.Drawing.Point(20, 182);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 40);
             this.btnSave.TabIndex = 4;
@@ -191,6 +192,7 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.btnEncode);
             this.groupBox4.Controls.Add(this.btnOpen);
             this.groupBox4.Controls.Add(this.btnDecode);
@@ -198,7 +200,7 @@
             this.groupBox4.Location = new System.Drawing.Point(379, 344);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.groupBox4.Size = new System.Drawing.Size(113, 249);
+            this.groupBox4.Size = new System.Drawing.Size(113, 251);
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Controls";
@@ -217,11 +219,21 @@
             this.btnOpen.MouseEnter += new System.EventHandler(this.btnOpen_MouseEnter);
             this.btnOpen.MouseLeave += new System.EventHandler(this.btnOpen_MouseLeave);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(64, 228);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(31, 20);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(515, 618);
+            this.ClientSize = new System.Drawing.Size(515, 610);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -257,6 +269,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button1;
     }
 }
 

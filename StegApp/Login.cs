@@ -18,7 +18,7 @@ namespace StegApp
 
         public void StartForm()
         {
-            Application.Run(new Splash());
+            Application.Run(new Splash()); //run form
         }
         private void Login_Load(object sender, EventArgs e)
         {
@@ -85,6 +85,12 @@ namespace StegApp
         private void btnLogin_MouseLeave(object sender, EventArgs e)
         {
             btnLogin.Style = MetroFramework.MetroColorStyle.Default;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Help help = new Help();
+            help.ShowDialog();
         }
     }
 }

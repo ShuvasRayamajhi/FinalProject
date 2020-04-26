@@ -35,6 +35,7 @@
             this.btnRegister = new MetroFramework.Controls.MetroTile();
             this.btnLogin = new MetroFramework.Controls.MetroTile();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,6 +100,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.btnRegister);
             this.groupBox1.Controls.Add(this.btnLogin);
             this.groupBox1.Controls.Add(this.txtUsername);
@@ -112,6 +114,16 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "User";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(220, 192);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(31, 20);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "?";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Login
             // 
@@ -137,5 +149,6 @@
         private MetroFramework.Controls.MetroTile btnRegister;
         private MetroFramework.Controls.MetroTile btnLogin;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
