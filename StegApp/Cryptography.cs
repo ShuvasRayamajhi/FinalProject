@@ -8,30 +8,30 @@ namespace StegApp
 {
     public static class Cryptography
     {
-        private const int keySize = 256;
-        private const int iterationOfDerivation = 1000;
-
-        public static string Encrypt(string inputTxt, string password) //user entered text and password
+        private const int iterationOfDerivation = 1000; //used for the password generation function
+        private const int keySize = 256; //variable that decides the encryption key size
+        
+        public static string Encryption(string inputTxt, string password) //user entered text and password
         {
-            byte[] saltStringBytes = Generate256BitsOfRandomEntropy();
-            byte [] ivStringBytes = Generate256BitsOfRandomEntropy();
-            byte[] plainBytes = Encoding.UTF8.GetBytes(inputTxt);
-            using (Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, saltStringBytes, iterationOfDerivation)) //generate the  decryption key using the inupt password
+            byte[] ivBytes = Generate256BitsOfRandomEntropy(); //declare iv bytes variable
+            byte[] plainBytes = Encoding.UTF8.GetBytes(inputTxt); //declare plain text byte variable
+            byte[] saltBytes = Generate256BitsOfRandomEntropy(); //declare salt byte variable
+            using (Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, saltBytes, iterationOfDerivation)) //generate the  decryption key using the inupt password
             {
                 byte[] keyBytes = decryptKey.GetBytes(keySize / 8); //set the decryption key size
                 using (RijndaelManaged algorithmAES = new RijndaelManaged()) //create RijndaelManaged object (used to encrypt text)
                 {
-                    algorithmAES.BlockSize = 256; //set block size
                     algorithmAES.Mode = CipherMode.CBC; //set cipher mode
                     algorithmAES.Padding = PaddingMode.PKCS7; //set padding
-                    using (ICryptoTransform encryptor = algorithmAES.CreateEncryptor(keyBytes, ivStringBytes)) //create the encryptor for the stream
+                    algorithmAES.BlockSize = 256; //set block size
+                    using (ICryptoTransform encryptor = algorithmAES.CreateEncryptor(keyBytes, ivBytes)) //create the encryptor for the stream
                     using (MemoryStream memoryStream = new MemoryStream()) //create memory stream for encryption
                     using (CryptoStream memStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
                     {
                         memStream.Write(plainBytes, 0, plainBytes.Length); //write
                         memStream.FlushFinalBlock();
-                        byte[] cipherBytes = saltStringBytes;
-                        cipherBytes = cipherBytes.Concat(ivStringBytes).ToArray();
+                        byte[] cipherBytes = saltBytes;
+                        cipherBytes = cipherBytes.Concat(ivBytes).ToArray();
                         cipherBytes = cipherBytes.Concat(memoryStream.ToArray()).ToArray();
                         memoryStream.Close();
                         memStream.Close();
@@ -41,15 +41,14 @@ namespace StegApp
                 }
             }
         }
-
-        public static string Decrypt(string encryptedText, string password) //encrypted text, password
+        public static string Decryption(string encryptedText, string password) //encrypted text, password
         {
-            byte[] cipherTextBytesWithSaltAndIv = Convert.FromBase64String(encryptedText);
-            byte[] saltStringBytes = cipherTextBytesWithSaltAndIv.Take(keySize / 8).ToArray();
-            byte[] ivStringBytes = cipherTextBytesWithSaltAndIv.Skip(keySize / 8).Take(keySize / 8).ToArray();
-            byte[] cipherBytes = cipherTextBytesWithSaltAndIv.Skip((keySize / 8) * 2).Take(cipherTextBytesWithSaltAndIv.Length - ((keySize / 8) * 2)).ToArray();
+            byte[] cipherBytesWithSaltIv = Convert.FromBase64String(encryptedText); //get the cipher text, that was extract from the image
+            byte[] saltBytes = cipherBytesWithSaltIv.Take(keySize / 8).ToArray();
+            byte[] ivBytes = cipherBytesWithSaltIv.Skip(keySize / 8).Take(keySize / 8).ToArray();
+            byte[] cipherBytes = cipherBytesWithSaltIv.Skip((keySize / 8) * 2).Take(cipherBytesWithSaltIv.Length - ((keySize / 8) * 2)).ToArray();
             
-            using (Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, saltStringBytes, iterationOfDerivation)) //generate key 
+            using (Rfc2898DeriveBytes decryptKey = new Rfc2898DeriveBytes(password, saltBytes, iterationOfDerivation)) //generate key 
             {
                 byte[] keyBytes = decryptKey.GetBytes(keySize / 8); //specify key
                 using (RijndaelManaged algorithmAES = new RijndaelManaged())  //create rijandaelmanged object
@@ -57,9 +56,9 @@ namespace StegApp
                     algorithmAES.BlockSize = 256; //set block size
                     algorithmAES.Mode = CipherMode.CBC; //set cipher mode
                     algorithmAES.Padding = PaddingMode.PKCS7; //set padding
-                    using (ICryptoTransform decryptor = algorithmAES.CreateDecryptor(keyBytes, ivStringBytes)) //create decryptor
-                    using (MemoryStream memoryStream = new MemoryStream(cipherBytes))
-                    using (CryptoStream memStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
+                    using (ICryptoTransform decryptor = algorithmAES.CreateDecryptor(keyBytes, ivBytes)) //create decryptor
+                    using (MemoryStream memoryStream = new MemoryStream(cipherBytes)) //create memory stream
+                    using (CryptoStream memStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read)) //create crypto stream
                     {
                         byte[] plainBytes = new byte[cipherBytes.Length];
                         int decryptedByteCount = memStream.Read(plainBytes, 0, plainBytes.Length);
@@ -73,7 +72,7 @@ namespace StegApp
             }
         }
 
-        private static byte[] Generate256BitsOfRandomEntropy()
+        private static byte[] Generate256BitsOfRandomEntropy() //generate random bytes
         {
             byte[] randomBytes = new byte[32]; 
             using (RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider())

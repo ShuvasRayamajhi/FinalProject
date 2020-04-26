@@ -86,13 +86,10 @@ namespace StegApp
                 if (txtPassword.Text == " ") //check that password is at least of length 5
                     MessageBox.Show("Password needs to be entered!", "Warning");
                 
-                else if (txtPassword.Text.Length < 5) //check that password is at least of length 5
-                    MessageBox.Show("Password has to be 5 characters!", "Warning");
-
                 else if (txtPassword.Text.Length >= 5)
-                    encodeText = Cryptography.Encrypt(encodeText, txtPassword.Text); //encryption
+                    encodeText = Cryptography.Encryption(encodeText, txtPassword.Text); //encryption
             }
-            if (bitmp != null || txtPassword.TextLength >= 5)
+            if (bitmp != null && txtPassword.Text.Length >= 5)
             {
                 bitmp = StegEncode.Encoding(encodeText, bitmp); //call steganography function
                 MessageBox.Show("Success!", "Done");
@@ -110,7 +107,7 @@ namespace StegApp
                         bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
                 }
             }
-            else if (txtPassword.TextLength < 5 )
+            else if (txtPassword.Text.Length < 5 )
             {
                 MessageBox.Show("Password too short!", "Warning");
             }
@@ -127,7 +124,7 @@ namespace StegApp
             {
                 string decodeText = StegDecode.StegDecoding(bitmp); //steganography
                
-                if (togEncrypt.Checked)
+                if (togEncrypt.Checked) //check that encryption is enabless
                 {
                     if (txtPassword.Text == " ")
                     {
@@ -147,7 +144,7 @@ namespace StegApp
                         try
                         {
                             string password = txtPassword.Text;
-                            decodeText = Cryptography.Decrypt(decodeText, password); //decryption
+                            decodeText = Cryptography.Decryption(decodeText, password); //decryption
                         }
                         catch (Exception ex)
                         {
