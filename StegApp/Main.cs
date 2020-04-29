@@ -96,16 +96,23 @@ namespace StegApp
 
                 SaveFileDialog saveFile = new SaveFileDialog(); //save image
                 saveFile.Filter = "Png Image|*.png|Bitmap Image|*.bmp";
-
-                if (saveFile.ShowDialog() == DialogResult.OK) 
+                try
                 {
-                    if (saveFile.FilterIndex == 0)
-                        bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
+                    if (saveFile.ShowDialog() == DialogResult.OK)
+                    {
+                        if (saveFile.FilterIndex == 0)
+                            bitmp.Save(saveFile.FileName, ImageFormat.Png); //png
 
-                   
-                    else if (saveFile.FilterIndex == 1)
-                        bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
+
+                        else if (saveFile.FilterIndex == 1)
+                            bitmp.Save(saveFile.FileName, ImageFormat.Bmp);//bmp
+                    }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                    
             }
             else
             {
