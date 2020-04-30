@@ -42,7 +42,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnOpen = new MetroFramework.Controls.MetroTile();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
@@ -53,7 +52,7 @@
             // 
             // btnEncode
             // 
-            this.btnEncode.Location = new System.Drawing.Point(20, 79);
+            this.btnEncode.Location = new System.Drawing.Point(20, 86);
             this.btnEncode.Name = "btnEncode";
             this.btnEncode.Size = new System.Drawing.Size(75, 40);
             this.btnEncode.TabIndex = 2;
@@ -65,7 +64,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(20, 182);
+            this.btnSave.Location = new System.Drawing.Point(20, 203);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 40);
             this.btnSave.TabIndex = 4;
@@ -77,7 +76,7 @@
             // 
             // btnDecode
             // 
-            this.btnDecode.Location = new System.Drawing.Point(20, 132);
+            this.btnDecode.Location = new System.Drawing.Point(20, 145);
             this.btnDecode.Name = "btnDecode";
             this.btnDecode.Size = new System.Drawing.Size(75, 40);
             this.btnDecode.TabIndex = 3;
@@ -161,7 +160,7 @@
             this.picBox.Location = new System.Drawing.Point(6, 15);
             this.picBox.Name = "picBox";
             this.picBox.Size = new System.Drawing.Size(457, 251);
-            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBox.TabIndex = 0;
             this.picBox.TabStop = false;
             // 
@@ -193,7 +192,6 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.btnEncode);
             this.groupBox4.Controls.Add(this.btnOpen);
             this.groupBox4.Controls.Add(this.btnDecode);
@@ -206,19 +204,9 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Controls";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(64, 228);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(31, 20);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "?";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // btnOpen
             // 
-            this.btnOpen.Location = new System.Drawing.Point(20, 21);
+            this.btnOpen.Location = new System.Drawing.Point(20, 29);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(75, 40);
             this.btnOpen.TabIndex = 1;
@@ -270,7 +258,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button1;
     }
 }
 

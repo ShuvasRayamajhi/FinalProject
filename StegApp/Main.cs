@@ -203,11 +203,7 @@ namespace StegApp
             btnSave.Style = MetroFramework.MetroColorStyle.Default;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Help help = new Help();
-            help.ShowDialog();
-        }
+   
 
        
     }
