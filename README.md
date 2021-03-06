@@ -1,9 +1,8 @@
-Done:
-1. Encode
-2. Register Login
-1. Decode
-2. Encrypt
-3. Decryt
-4. Comments
-5. Design improvements
+Image steganoraphy windows application. 
+1. Register & Login
+2. Encode
+3. Decode
+4. Encrypt
+5. Decryt
+
 
